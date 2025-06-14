@@ -36,3 +36,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### log ###
+grafana
+kafka
+logs
+nginx
+prometheus
+prometheus.yml
