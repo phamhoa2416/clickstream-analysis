@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'spring-boot-app'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['clickstream-analysis:8080']
+
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['kafka:7071']
+
+  - job_name: 'clickhouse'
+    static_configs:
+      - targets: ['clickhouse-exporter:9116']
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
