@@ -26,6 +26,7 @@
         <logback.version>1.2.11</logback.version>
         <jackson.version>2.13.3</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hibernate.version>8.0.12.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -146,6 +147,27 @@
             <version>1.18.26</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--Hibernate-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.2.Final</version>
+        </dependency>
+
+        <!--Jakarta-->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <version>5.0.0-M1</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>io.micrometer</groupId>
