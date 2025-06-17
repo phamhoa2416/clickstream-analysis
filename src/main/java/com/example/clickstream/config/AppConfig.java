@@ -1,48 +1,42 @@
 package com.example.clickstream.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Configuration
+@ConfigurationProperties(prefix = "app")
 public class AppConfig {
-    // Kafka configuration
-    @Value("${kafka.bootstrap.servers}")
-    private String kafkaBootstrapServers;
+    private final Kafka kafka = new Kafka();
+    private final ClickHouse clickhouse = new ClickHouse();
+    private final Spark spark = new Spark();
 
-    @Value("${kafka.topic}")
-    private String kafkaTopic;
+    @Getter
+    @Setter
+    public static class Kafka {
+        private String bootstrapServers;
+        private String topic;
+        private String consumerGroupId;
+        private int partitions = 2;
+        private short replicationFactor = 1;
+    }
 
-    @Value("${kafka.consumer.group.id}")
-    private String kafkaConsumerGroupId;
+    @Getter
+    @Setter
+    public static class ClickHouse {
+        private String url;
+        private String user;
+        private String password;
+        private String database;
+    }
 
-    @Value("${kafka.partitions:2}")
-    private int kafkaPartitions;
-
-    @Value("${kafka.replication.factor:1}")
-    private short kafkaReplicationFactor;
-
-    // ClickHouse configuration
-    @Value("${clickhouse.url}")
-    private String clickhouseUrl;
-
-    @Value("${clickhouse.user}")
-    private String clickhouseUser;
-
-    @Value("${clickhouse.password}")
-    private String clickhousePassword;
-
-    @Value("${clickhouse.database}")
-    private String clickhouseDatabase;
-
-    // Spark configuration
-    @Value("${spark.app.name}")
-    private String sparkAppName;
-
-    @Value("${spark.master}")
-    private String sparkMaster;
-
-    @Value("${spark.checkpoint.location}")
-    private String sparkCheckpointLocation;
+    @Getter
+    @Setter
+    public static class Spark {
+        private String appName;
+        private String master;
+        private String checkpointLocation;
+    }
 }
