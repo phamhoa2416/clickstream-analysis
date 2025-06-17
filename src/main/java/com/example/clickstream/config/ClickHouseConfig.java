@@ -22,12 +22,12 @@ public class ClickHouseConfig {
     @Bean
     public DataSource clickHouseDataSource() throws SQLException {
         Properties props = new Properties();
-        props.setProperty("user", appConfig.getClickhouseUser());
-        props.setProperty("password", appConfig.getClickhousePassword());
+        props.setProperty("user", appConfig.getClickhouse().getUser());
+        props.setProperty("password", appConfig.getClickhouse().getPassword());
         props.setProperty("socketTimeout", "30000");
 
         return new ClickHouseDataSource(
-                appConfig.getClickhouseUrl(),
+                appConfig.getClickhouse().getUrl(),
                 props
         );
     }

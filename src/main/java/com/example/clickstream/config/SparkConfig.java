@@ -18,8 +18,8 @@ public class SparkConfig {
     @Bean
     public SparkConf sparkConf() {
         return new SparkConf()
-                .setAppName(appConfig.getSparkAppName())
-                .setMaster(appConfig.getSparkMaster())
+                .setAppName(appConfig.getSpark().getAppName())
+                .setMaster(appConfig.getSpark().getMaster())
                 .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
                 .set("spark.sql.shuffle.partitions", "8")
                 .set("spark.executor.memory", "2g")

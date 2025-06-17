@@ -29,7 +29,7 @@ public class KafkaConfig {
         Map<String, Object> configs = new HashMap<>();
         configs.put(
                 AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG,
-                appConfig.getKafkaBootstrapServers()
+                appConfig.getKafka().getBootstrapServers()
         );
         return new KafkaAdmin(configs);
     }
@@ -37,16 +37,16 @@ public class KafkaConfig {
     @Bean
     public NewTopic clickhouseTopic() {
         return new NewTopic(
-                appConfig.getKafkaTopic(),
-                appConfig.getKafkaPartitions(),
-                appConfig.getKafkaReplicationFactor()
+                appConfig.getKafka().getTopic(),
+                appConfig.getKafka().getPartitions(),
+                appConfig.getKafka().getReplicationFactor()
         );
     }
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafkaBootstrapServers());
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafka().getBootstrapServers());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.ACKS_CONFIG, "all");
@@ -66,8 +66,8 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, String>  consumerFactory() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafkaBootstrapServers());
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, appConfig.getKafkaConsumerGroupId());
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, appConfig.getKafka().getBootstrapServers());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, appConfig.getKafka().getConsumerGroupId());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
