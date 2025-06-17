@@ -158,6 +158,34 @@ services:
     networks:
       - clickstream-network
 
+  superset:
+    image: apache/superset:latest
+    container_name: superset
+    environment:
+      - SUPERSET_LOAD_EXAMPLES=yes
+      - SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}
+      - SUPERSET_WEBSERVER_PORT=8088
+      - SUPERSET_WEBSERVER_TIMEOUT=30
+      - SUPERSET_WEBSERVER_WORKERS=4
+    ports:
+      - "8088:8088"
+    depends_on:
+      - clickhouse
+    volumes:
+      - ./superset:/app/pythonpath
+      - ./requirements.txt:/app/requirements.txt
+    restart: always
+    command: >
+      /bin/bash -c "
+      pip install --upgrade pip &&
+      pip install -r /app/requirements.txt &&
+      superset db upgrade &&
+      superset fab create-admin --username admin --firstname Admin --lastname User --email admin@superset.com --password admin &&
+      superset init &&
+      superset run -h 0.0.0.0 -p 8088"
+    networks:
+      - clickstream-network
+
   kafka-exporter:
     image: danielqsj/kafka-exporter
     container_name: kafka-exporter
