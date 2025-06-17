@@ -34,8 +34,8 @@ public class ClickstreamProcessor {
 
         Dataset<Row> kafkaDf = sparkSession.readStream()
                 .format("kafka")
-                .option("kafka.bootstrap.servers", appConfig.getKafkaBootstrapServers())
-                .option("subscribe", appConfig.getKafkaTopic())
+                .option("kafka.bootstrap.servers", appConfig.getKafka().getBootstrapServers())
+                .option("subscribe", appConfig.getKafka().getTopic())
                 .option("startingOffsets", "earliest")
                 .option("maxOffsetsPerTrigger", 10000)
                 .load();
@@ -111,11 +111,11 @@ public class ClickstreamProcessor {
 
                         batchDf.write()
                                 .format("jdbc")
-                                .option("url", appConfig.getClickhouseUrl())
+                                .option("url", appConfig.getClickhouse().getUrl())
                                 .option("driver", "com.clickhouse.jdbc.ClickHouseDriver")
                                 .option("dbtable", "clickstream.events")
-                                .option("user", appConfig.getClickhouseUser())
-                                .option("password", appConfig.getClickhousePassword())
+                                .option("user", appConfig.getClickhouse().getUser())
+                                .option("password", appConfig.getClickhouse().getPassword())
                                 .mode("append")
                                 .save();
                     } catch (Exception e) {
@@ -123,7 +123,7 @@ public class ClickstreamProcessor {
                         throw new RuntimeException("Failed to process batch " + batchId, e);
                     }
                 })
-                .option("checkpointLocation", appConfig.getSparkCheckpointLocation())
+                .option("checkpointLocation", appConfig.getSpark().getCheckpointLocation())
                 .trigger(org.apache.spark.sql.streaming.Trigger.ProcessingTime("1 second"))
                 .outputMode("append")
                 .start();

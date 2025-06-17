@@ -44,7 +44,7 @@ public class ClickstreamProducer {
             String eventJson = objectMapper.writeValueAsString(event);
             log.info("Preparing to send event: {}", objectMapper.writeValueAsString(event));
             ProducerRecord<String, String> record = new ProducerRecord<>(
-                    appConfig.getKafkaTopic(),
+                    appConfig.getKafka().getTopic(),
                     event.getEventId(),
                     eventJson
             );
