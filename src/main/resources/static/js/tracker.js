@@ -144,7 +144,7 @@ class ClickstreamTracker {
             session_id: this.session_id,
             session_start_time: this.session_start_time,
             session_sequence: this.session_sequence,
-            app_id: this.config.app_id,
+            app_id: this.config.appId,
             schema_version: this.config.schemaVersion,
             ...this.getDeviceInfo(),
             ...this.getPageInfo(),
