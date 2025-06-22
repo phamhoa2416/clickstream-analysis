@@ -42,14 +42,12 @@ public class ClickstreamProducer {
     public void sendEvent(Event event) {
         try {
             String eventJson = objectMapper.writeValueAsString(event);
-            log.info("Preparing to send event: {}", objectMapper.writeValueAsString(event));
+            log.info("Preparing to send event: {}", event.getEventId());
             ProducerRecord<String, String> record = new ProducerRecord<>(
                     appConfig.getKafka().getTopic(),
                     event.getEventId(),
                     eventJson
             );
-            kafkaTemplate.send(record).get(5, TimeUnit.SECONDS);
-
             SendResult<String, String> result = kafkaTemplate.send(record).get(5, TimeUnit.SECONDS);
             log.info("Event sent to Kafka topic: {}, partition: {}, offset: {}",
                     result.getRecordMetadata().topic(),
@@ -61,6 +59,7 @@ public class ClickstreamProducer {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             metrics.incrementFailure();
             log.error("Failed to send event {}", event.getEventId(), e);
+            throw new ProducerException("Failed to send event: " + event.getEventId(), e);
         } catch (Exception e) {
             metrics.incrementFailure();
             log.error("Unexpected error sending event", e);
