@@ -20,6 +20,7 @@ services:
     volumes:
       - zookeeper-data:/var/lib/zookeeper/data
       - zookeeper-log:/var/lib/zookeeper/log
+    restart: unless-stopped
     networks:
       - clickstream-network
 
@@ -47,6 +48,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'false'
     volumes:
       - kafka-logs:/var/log/kafka
+    restart: unless-stopped
     ports:
       - "9092:9092"
       - "29092:29092"
@@ -70,6 +72,7 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER: "zookeeper:2181"
     depends_on:
       - kafka
+    restart: unless-stopped
     networks:
       - clickstream-network
 
@@ -87,6 +90,7 @@ services:
     volumes:
       - clickhouse-data:/var/lib/clickhouse
       - clickhouse-config:/etc/clickhouse-server
+    restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "echo 'SELECT 1' | clickhouse-client --host localhost --port 9000 --user=${CLICKHOUSE_USER} --password=${CLICKHOUSE_PASSWORD} || exit 1" ]
       start_period: 15s
@@ -105,6 +109,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/logs:/var/log/nginx
       - ./src/main/resources/static:/usr/share/nginx/html
+    restart: unless-stopped
     networks:
       - clickstream-network
 
@@ -124,6 +129,7 @@ services:
       CLICKHOUSE_URL: jdbc:clickhouse://clickhouse:8123/clickstream
       CLICKHOUSE_USER: ${CLICKHOUSE_USER}
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+    restart: unless-stopped
     networks:
       - clickstream-network
 
@@ -174,7 +180,7 @@ services:
     volumes:
       - ./superset:/app/pythonpath
       - ./requirements.txt:/app/requirements.txt
-    restart: always
+    restart: unless-stopped
     command: >
       /bin/bash -c "
       pip install --upgrade pip &&
@@ -195,6 +201,7 @@ services:
       - clickstream-network
     command:
       - --kafka.server=kafka:9092
+    restart: unless-stopped
     depends_on:
         kafka:
           condition: service_healthy
@@ -204,6 +211,7 @@ services:
     container_name: clickhouse-exporter
     ports:
       - "9116:9116"
+    restart: unless-stopped
     networks:
       - clickstream-network
     environment:
