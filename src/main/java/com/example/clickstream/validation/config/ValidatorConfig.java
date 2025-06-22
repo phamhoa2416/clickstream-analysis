@@ -1,4 +1,4 @@
-package com.example.clickstream.config;
+package com.example.clickstream.validation.config;
 
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.springframework.context.annotation.Bean;
