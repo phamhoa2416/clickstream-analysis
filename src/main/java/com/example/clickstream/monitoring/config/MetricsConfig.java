@@ -1,7 +1,7 @@
-package com.example.monitoring.config;
+package com.example.clickstream.monitoring.config;
 
-import com.example.monitoring.metrics.ClickstreamMetrics;
-import com.example.monitoring.metrics.ProducerMetrics;
+import com.example.clickstream.monitoring.metrics.ClickstreamMetrics;
+import com.example.clickstream.monitoring.metrics.ProducerMetrics;
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.context.annotation.Bean;

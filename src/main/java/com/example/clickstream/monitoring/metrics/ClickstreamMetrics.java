@@ -1,4 +1,4 @@
-package com.example.monitoring.metrics;
+package com.example.clickstream.monitoring.metrics;
 
 import io.micrometer.core.instrument.*;
 import org.apache.spark.sql.Dataset;

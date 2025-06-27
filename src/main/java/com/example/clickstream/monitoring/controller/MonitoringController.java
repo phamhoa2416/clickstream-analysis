@@ -1,7 +1,7 @@
-package com.example.monitoring.controller;
+package com.example.clickstream.monitoring.controller;
 
-import com.example.monitoring.metrics.ClickstreamMetrics;
-import com.example.monitoring.metrics.ProducerMetrics;
+import com.example.clickstream.monitoring.metrics.ClickstreamMetrics;
+import com.example.clickstream.monitoring.metrics.ProducerMetrics;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -2,7 +2,7 @@ package com.example.clickstream.controller;
 
 import com.example.clickstream.models.dto.EventPayload;
 import com.example.clickstream.service.ClickstreamService;
-import com.example.monitoring.metrics.ClickstreamMetrics;
+import com.example.clickstream.monitoring.metrics.ClickstreamMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

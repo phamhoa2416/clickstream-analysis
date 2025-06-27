@@ -1,4 +1,4 @@
-package com.example.monitoring.health;
+package com.example.clickstream.monitoring.health;
 
 import com.clickhouse.jdbc.ClickHouseConnection;
 import org.springframework.boot.actuate.health.Health;

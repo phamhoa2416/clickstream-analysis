@@ -1,4 +1,4 @@
-package com.example.monitoring.health;
+package com.example.clickstream.monitoring.health;
 
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQuery;

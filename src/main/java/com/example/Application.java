@@ -2,7 +2,7 @@ package com.example;
 
 import com.example.clickstream.config.AppConfig;
 import com.example.clickstream.processor.ClickstreamProcessor;
-import com.example.monitoring.metrics.ClickstreamMetrics;
+import com.example.clickstream.monitoring.metrics.ClickstreamMetrics;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

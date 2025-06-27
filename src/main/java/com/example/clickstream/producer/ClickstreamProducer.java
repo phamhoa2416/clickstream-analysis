@@ -2,7 +2,7 @@ package com.example.clickstream.producer;
 
 import com.example.clickstream.config.AppConfig;
 import com.example.clickstream.models.Event;
-import com.example.monitoring.metrics.ProducerMetrics;
+import com.example.clickstream.monitoring.metrics.ProducerMetrics;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.clickstream.exception.ProducerException;
 import org.apache.kafka.clients.producer.ProducerRecord;

@@ -1,7 +1,7 @@
 package com.example.clickstream.processor;
 
 import com.example.clickstream.config.AppConfig;
-import com.example.monitoring.metrics.ClickstreamMetrics;
+import com.example.clickstream.monitoring.metrics.ClickstreamMetrics;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
