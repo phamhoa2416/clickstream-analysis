@@ -1,0 +1,113 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'maven-publish'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+description = 'clickstream-analysis'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://repo.maven.apache.org/maven2"
+    }
+}
+
+ext {
+    sparkVersion = '3.5.1'
+    kafkaVersion = '3.7.1'
+    clickhouseVersion = '0.4.6'
+    prometheusVersion = '0.16.0'
+    slf4jVersion = '1.7.36'
+    logbackVersion = '1.2.11'
+    jacksonVersion = '2.17.1'
+    hibernateVersion = '8.0.12.Final'
+}
+
+dependencies {
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // Apache Spark
+    implementation "org.apache.spark:spark-sql_2.12:$sparkVersion"
+    implementation "org.apache.spark:spark-sql-kafka-0-10_2.12:$sparkVersion"
+    implementation "org.apache.spark:spark-streaming_2.12:$sparkVersion"
+    implementation("org.apache.spark:spark-streaming-kafka-0-10_2.12:$sparkVersion") {
+        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
+        exclude group: 'com.fasterxml.jackson.module', module: 'jackson-module-scala_2.12'
+    }
+
+    // Kafka
+    implementation "org.apache.kafka:kafka-clients:$kafkaVersion"
+    implementation 'com.google.guava:guava:32.1.2-jre'
+
+    // Clickhouse
+    implementation "com.clickhouse:clickhouse-jdbc:$clickhouseVersion"
+
+    // Prometheus
+    implementation "io.prometheus:simpleclient:$prometheusVersion"
+    implementation "io.prometheus:simpleclient_httpserver:$prometheusVersion"
+
+    // Logging
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
+
+    // JSON
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-scala_2.12:$jacksonVersion"
+
+    // Validation
+    implementation "org.hibernate.validator:hibernate-validator:8.0.2.Final"
+    implementation "jakarta.validation:jakarta.validation-api:3.0.2"
+    implementation "org.glassfish:jakarta.el:5.0.0-M1"
+
+    // Metrics & Env
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.9.0'
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    // Tests
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    mainClass = 'com.example.Application'
+}
+
+bootRun {
+    jvmArgs += [
+            "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED"
+    ]
+}
+
