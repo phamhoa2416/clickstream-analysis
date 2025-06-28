@@ -9,11 +9,13 @@ import org.apache.spark.sql.streaming.StreamingQuery;
 import org.apache.spark.sql.streaming.StreamingQueryException;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeoutException;
 
 import static org.apache.spark.sql.functions.*;
 
+@Component
 public class ClickstreamProcessor {
     private final SparkSession sparkSession;
     private final AppConfig appConfig;
