@@ -20,7 +20,7 @@ public class SparkConfig {
         return new SparkConf()
                 .setAppName(appConfig.getSpark().getAppName())
                 .setMaster(appConfig.getSpark().getMaster())
-                .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+                .set("spark.serializer", "org.apache.spark.serializer.JavaSerializer")
                 .set("spark.sql.shuffle.partitions", "8")
                 .set("spark.executor.memory", "2g")
                 .set("spark.driver.memory", "2g")
