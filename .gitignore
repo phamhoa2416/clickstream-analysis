@@ -21,6 +21,7 @@ org
 
 ### Gradle ###
 .gradle
+target
 
 
 ### NetBeans ###
