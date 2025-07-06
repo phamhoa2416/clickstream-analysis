@@ -31,7 +31,9 @@ public class SparkConfig {
     public SparkSession sparkSession() {
         return SparkSession.builder()
                 .config(sparkConf())
-                .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0")
+                .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1")
+                .config("spark.driver.extraJavaOptions", "--add-exports java.base/sun.nio.ch=ALL-UNNAMED")
+                .config("spark.executor.extraJavaOptions", "--add-exports java.base/sun.nio.ch=ALL-UNNAMED")
                 .getOrCreate();
     }
 }
